@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Airplane Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: radial-gradient(circle at 10% 30%, #0b1f2e, #050e17);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', 'Poppins', system-ui, 'Inter', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+            padding: 1.5rem;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 15% 40%, rgba(255,235,190,0.03) 1.5%, transparent 2%),
+                              radial-gradient(circle at 85% 70%, rgba(255,200,100,0.02) 2%, transparent 2.5%);
+            background-size: 60px 60px, 80px 80px;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .game-hub {
+            background: rgba(8, 20, 35, 0.65);
+            backdrop-filter: blur(12px);
+            border-radius: 80px;
+            padding: 3rem 2.8rem;
+            box-shadow: 0 30px 45px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 215, 150, 0.25);
+            text-align: center;
+            width: 100%;
+            max-width: 660px;
+            transition: all 0.25s ease;
+            z-index: 2;
+        }
+        .tiny-jet {
+            font-size: 2.2rem;
+            opacity: 0.65;
+            letter-spacing: 4px;
+            margin-bottom: 0.2rem;
+            transform: rotate(2deg);
+            display: inline-block;
+        }
+        .game-main-title {
+            font-size: clamp(3rem, 11vw, 5.4rem);
+            font-weight: 800;
+            letter-spacing: -0.01em;
+            background: linear-gradient(145deg, #FFE5B4, #FFB347, #FF9540);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            margin: 0.25rem 0 0.2rem 0;
+            line-height: 1.2;
+        }
+        .download-zone {
+            margin-top: 2.8rem;
+        }
+        .download-zip-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            background: linear-gradient(115deg, #FF9F4A, #FF6E2C);
+            border: none;
+            padding: 1.2rem 2.8rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+            font-family: inherit;
+            color: #0A1422;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: 0 10px 22px -6px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            text-decoration: none;
+            letter-spacing: 1.2px;
+            backdrop-filter: blur(2px);
+        }
+        .download-zip-button:hover {
+            transform: translateY(-4px);
+            background: linear-gradient(115deg, #FFB05A, #FF8238);
+            box-shadow: 0 24px 30px -12px black;
+            color: #03070f;
+        }
+        .download-zip-button:active {
+            transform: translateY(2px);
+            transition: 0.05s;
+        }
+        .button-icon {
+            font-size: 1.9rem;
+            transition: transform 0.2s;
+        }
+        .download-zip-button:hover .button-icon {
+            transform: translateY(3px);
+        }
+        footer, .extra-note, .support, .version-text, .game-desc, .legal {
+            display: none;
+        }
+        @media (max-width: 550px) {
+            .game-hub {
+                padding: 2rem 1.6rem;
+                border-radius: 60px;
+            }
+            .download-zip-button {
+                padding: 1rem 2rem;
+                font-size: 1.4rem;
+                gap: 10px;
+            }
+            .button-icon {
+                font-size: 1.5rem;
+            }
+            .tiny-jet {
+                font-size: 1.9rem;
+            }
+        }
+        a, .fake-link {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-hub">
+        <div class="tiny-jet">✈️</div>
+        <h1 class="game-main-title">Airplane Game</h1>
+        <div class="download-zone">
+            <button class="download-zip-button" id="downloadAirplaneButton">
+                <span>DOWNLOAD</span>
+                <span class="button-icon">⬇️</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const downloadUrl = "./Airplane.zip";
+            const downloadFileName = "Airplane.zip";
+            const downloadButton = document.getElementById("downloadAirplaneButton");
+            function startDownload(url, filename) {
+                if (!url || url === "") {
+                    alert("Download URL is not configured");
+                    return;
+                }
+                const link = document.createElement("a");
+                link.href = url;
+                if (filename) {
+                    link.download = filename;
+                }
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+            if (downloadButton) {
+                downloadButton.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    startDownload(downloadUrl, downloadFileName);
+                });
+            }
+        })();
+    </script>
+</body>
+</html>
