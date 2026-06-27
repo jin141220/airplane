@@ -78,6 +78,44 @@
             backdrop-filter: blur(18px);
         }
 
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.3rem;
+            background: rgba(255,255,255,0.03);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+        }
+
+        .brand {
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #ffe1b2;
+            font-size: 0.95rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.7rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            padding: 0.45rem 0.7rem;
+            border-radius: 999px;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,0.08);
+            color: var(--text);
+        }
+
         .hero {
             display: grid;
             grid-template-columns: 1.1fr 0.9fr;
@@ -382,6 +420,15 @@
 <body>
     <main class="page">
         <section class="shell">
+            <header class="topbar">
+                <div class="brand">Airplane Game</div>
+                <nav class="nav-links" aria-label="页面导航">
+                    <a class="nav-link" href="#features">游戏亮点</a>
+                    <a class="nav-link" href="#download">下载说明</a>
+                    <a class="nav-link" href="#faq">常见问题</a>
+                </nav>
+            </header>
+
             <div class="hero">
                 <div>
                     <div class="eyebrow">飞机游戏 • 官方下载中心</div>
@@ -403,7 +450,7 @@
                         </a>
                     </div>
                     <div class="info-strip">
-                        <span class="chip">🎮 单人冒险模式</span>
+                        <span class="chip">🎮 单人游戏模式</span>
                         <span class="chip">⚡ 快节奏空战体验</span>
                         <span class="chip">✨ 现代化视觉设计</span>
                     </div>
@@ -453,7 +500,7 @@
                 </div>
             </div>
 
-            <div class="section">
+            <div class="section" id="download">
                 <div class="update-grid">
                     <div class="update-card">
                         <h2 class="section-title">版本说明</h2>
@@ -463,7 +510,7 @@
                             <li>增强游戏介绍结构，更适合正式发布与展示</li>
                         </ul>
                     </div>
-                    <div class="faq-card">
+                    <div class="faq-card" id="faq">
                         <h2 class="section-title">常见问题</h2>
                         <div class="faq-list">
                             <details open>
