@@ -2,172 +2,380 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Airplane Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="下载《Airplane Game》，体验多关卡、升级系统与炫酷空战内容。">
+    <title>Airplane Game | 下载页面</title>
     <style>
+        :root {
+            --bg-1: #060b16;
+            --bg-2: #11233b;
+            --panel: rgba(10, 20, 35, 0.82);
+            --panel-strong: rgba(16, 31, 53, 0.95);
+            --text: #f7f7f7;
+            --muted: #aec2e0;
+            --accent: #ffb347;
+            --accent-2: #ff6f3c;
+            --accent-3: #63d2ff;
+            --border: rgba(255, 255, 255, 0.12);
+            --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+        }
+
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
         }
-        body {
-            background: radial-gradient(circle at 10% 30%, #0b1f2e, #050e17);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Segoe UI', 'Poppins', system-ui, 'Inter', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
-            padding: 1.5rem;
+
+        html, body {
+            margin: 0;
+            min-height: 100%;
+            font-family: "Segoe UI", "Inter", "Trebuchet MS", Arial, sans-serif;
+            background: radial-gradient(circle at top left, #18324c 0%, var(--bg-1) 40%, var(--bg-2) 100%);
+            color: var(--text);
+            overflow-x: hidden;
         }
-        body::before {
+
+        body::before,
+        body::after {
             content: "";
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: radial-gradient(circle at 15% 40%, rgba(255,235,190,0.03) 1.5%, transparent 2%),
-                              radial-gradient(circle at 85% 70%, rgba(255,200,100,0.02) 2%, transparent 2.5%);
-            background-size: 60px 60px, 80px 80px;
+            inset: 0;
             pointer-events: none;
             z-index: 0;
         }
-        .game-hub {
-            background: rgba(8, 20, 35, 0.65);
-            backdrop-filter: blur(12px);
-            border-radius: 80px;
-            padding: 3rem 2.8rem;
-            box-shadow: 0 30px 45px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 215, 150, 0.25);
-            text-align: center;
-            width: 100%;
-            max-width: 660px;
-            transition: all 0.25s ease;
-            z-index: 2;
+
+        body::before {
+            background-image: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
+            background-size: 28px 28px;
+            opacity: 0.18;
+            animation: drift 14s linear infinite;
         }
-        .tiny-jet {
-            font-size: 2.2rem;
-            opacity: 0.65;
-            letter-spacing: 4px;
-            margin-bottom: 0.2rem;
-            transform: rotate(2deg);
-            display: inline-block;
+
+        body::after {
+            background: linear-gradient(120deg, rgba(255, 179, 71, 0.08), transparent 35%, rgba(99, 210, 255, 0.08));
+            mix-blend-mode: screen;
         }
-        .game-main-title {
-            font-size: clamp(3rem, 11vw, 5.4rem);
+
+        .page {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 2rem 1.2rem;
+        }
+
+        .shell {
+            width: min(1120px, 100%);
+            background: var(--panel);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            border-radius: 32px;
+            overflow: hidden;
+            backdrop-filter: blur(18px);
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 2rem;
+            padding: 3rem;
+            position: relative;
+        }
+
+        .hero::before {
+            content: "✈";
+            position: absolute;
+            right: 2.2rem;
+            top: 1.2rem;
+            font-size: 6rem;
+            opacity: 0.14;
+            transform: rotate(18deg);
+            animation: float 4.5s ease-in-out infinite;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.45rem 0.8rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 179, 71, 0.3);
+            background: rgba(255, 179, 71, 0.12);
+            color: #ffdca9;
+            font-size: 0.9rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: clamp(2.4rem, 4vw, 4rem);
+            line-height: 1.08;
+            margin: 1rem 0 0.8rem;
             font-weight: 800;
-            letter-spacing: -0.01em;
-            background: linear-gradient(145deg, #FFE5B4, #FFB347, #FF9540);
-            background-clip: text;
+            letter-spacing: -0.03em;
+        }
+
+        .gradient-text {
+            background: linear-gradient(120deg, #fff1c7, var(--accent), #ffd0a3);
             -webkit-background-clip: text;
+            background-clip: text;
             color: transparent;
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            margin: 0.25rem 0 0.2rem 0;
-            line-height: 1.2;
         }
-        .download-zone {
-            margin-top: 2.8rem;
+
+        .lead {
+            color: var(--muted);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            max-width: 620px;
+            margin-bottom: 1.4rem;
         }
-        .download-zip-button {
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.6rem;
+        }
+
+        .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 14px;
-            background: linear-gradient(115deg, #FF9F4A, #FF6E2C);
-            border: none;
-            padding: 1.2rem 2.8rem;
-            font-size: 1.8rem;
+            gap: 0.6rem;
+            border: 0;
+            border-radius: 999px;
+            padding: 0.95rem 1.4rem;
+            font-size: 1rem;
             font-weight: 700;
-            font-family: inherit;
-            color: #0A1422;
-            border-radius: 100px;
+            text-decoration: none;
             cursor: pointer;
-            transition: 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            box-shadow: 0 10px 22px -6px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4);
-            text-decoration: none;
-            letter-spacing: 1.2px;
-            backdrop-filter: blur(2px);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
         }
-        .download-zip-button:hover {
-            transform: translateY(-4px);
-            background: linear-gradient(115deg, #FFB05A, #FF8238);
-            box-shadow: 0 24px 30px -12px black;
-            color: #03070f;
+
+        .btn:hover {
+            transform: translateY(-2px);
         }
-        .download-zip-button:active {
-            transform: translateY(2px);
-            transition: 0.05s;
+
+        .btn-primary {
+            color: #0a1422;
+            background: linear-gradient(120deg, var(--accent), var(--accent-2));
+            box-shadow: 0 12px 24px rgba(255, 111, 60, 0.24);
         }
-        .button-icon {
-            font-size: 1.9rem;
-            transition: transform 0.2s;
+
+        .btn-secondary {
+            color: var(--text);
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
         }
-        .download-zip-button:hover .button-icon {
-            transform: translateY(3px);
+
+        .visual-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 26px;
+            padding: 1.2rem;
+            position: relative;
+            min-height: 320px;
+            overflow: hidden;
         }
-        footer, .extra-note, .support, .version-text, .game-desc, .legal {
-            display: none;
+
+        .visual-card::before,
+        .visual-card::after {
+            content: "";
+            position: absolute;
+            inset: auto;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.7;
         }
-        @media (max-width: 550px) {
-            .game-hub {
-                padding: 2rem 1.6rem;
-                border-radius: 60px;
+
+        .visual-card::before {
+            width: 180px;
+            height: 180px;
+            background: rgba(99, 210, 255, 0.22);
+            top: -30px;
+            right: -40px;
+            animation: pulse 5s ease-in-out infinite;
+        }
+
+        .visual-card::after {
+            width: 220px;
+            height: 220px;
+            background: rgba(255, 179, 71, 0.2);
+            bottom: -70px;
+            left: -40px;
+            animation: pulse 6s ease-in-out infinite reverse;
+        }
+
+        .panel-grid {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .stat {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.95rem 1rem;
+            border-radius: 16px;
+            background: rgba(7, 16, 28, 0.7);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .stat strong {
+            font-size: 1.1rem;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1rem;
+            padding: 1.4rem 3rem 3rem;
+            background: rgba(255,255,255,0.025);
+        }
+
+        .feature {
+            padding: 1.15rem;
+            background: var(--panel-strong);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            min-height: 150px;
+        }
+
+        .feature h3 {
+            margin: 0.2rem 0 0.55rem;
+            font-size: 1.05rem;
+        }
+
+        .feature p {
+            margin: 0;
+            color: var(--muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .footer {
+            padding: 0 3rem 2.3rem;
+            color: var(--muted);
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(18deg); }
+            50% { transform: translateY(-10px) rotate(22deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.08); opacity: 0.95; }
+        }
+
+        @keyframes drift {
+            from { transform: translateY(0); }
+            to { transform: translateY(-30px); }
+        }
+
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 2rem 1.4rem 1.6rem;
             }
-            .download-zip-button {
-                padding: 1rem 2rem;
-                font-size: 1.4rem;
-                gap: 10px;
+
+            .features {
+                grid-template-columns: 1fr;
+                padding: 1rem 1.4rem 2rem;
             }
-            .button-icon {
-                font-size: 1.5rem;
+
+            .footer {
+                padding: 0 1.4rem 1.7rem;
             }
-            .tiny-jet {
-                font-size: 1.9rem;
-            }
-        }
-        a, .fake-link {
-            text-decoration: none;
         }
     </style>
 </head>
 <body>
-    <div class="game-hub">
-        <div class="tiny-jet">✈️</div>
-        <h1 class="game-main-title">Airplane Game</h1>
-        <div class="download-zone">
-            <button class="download-zip-button" id="downloadAirplaneButton">
-                <span>DOWNLOAD</span>
-                <span class="button-icon">⬇️</span>
-            </button>
-        </div>
-    </div>
+    <main class="page">
+        <section class="shell">
+            <div class="hero">
+                <div>
+                    <div class="eyebrow">飞机游戏 • 下载中心</div>
+                    <h1>
+                        <span class="gradient-text">Airplane Game</span>
+                        <br>
+                        起飞，进入极速战场。
+                    </h1>
+                    <p class="lead">
+                        这是一款融合了多关卡、升级系统和敌机波次的空战游戏。
+                        立即下载最新版本，开启属于你的飞行冒险。
+                    </p>
+                    <div class="actions">
+                        <a class="btn btn-primary" href="https://github.com/jin141220/airplane/releases/download/Airplane/Airplane.zip" download="Airplane.zip">
+                            立即下载 ⬇
+                        </a>
+                        <a class="btn btn-secondary" href="#features">
+                            查看特色
+                        </a>
+                    </div>
+                </div>
+
+                <div class="visual-card" aria-label="游戏预览面板">
+                    <div class="panel-grid">
+                        <div class="stat">
+                            <span>最新版本</span>
+                            <strong>Airplane 1.0</strong>
+                        </div>
+                        <div class="stat">
+                            <span>游戏模式</span>
+                            <strong>单人游戏</strong>
+                        </div>
+                        <div class="stat">
+                            <span>关卡内容</span>
+                            <strong>15 关</strong>
+                        </div>
+                        <div class="stat">
+                            <span>升级系统</span>
+                            <strong>血量 • 射击 • 子弹</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="features" id="features">
+                <article class="feature">
+                    <h3>⚡ 极速对战</h3>
+                    <p>操作流畅，敌机不断进攻，开局就能体验到紧张刺激的射击节奏。</p>
+                </article>
+                <article class="feature">
+                    <h3>🎮 多样成长</h3>
+                    <p>解锁新关卡，提升战机性能，随着冒险推进不断变强。</p>
+                </article>
+                <article class="feature">
+                    <h3>✨ 视觉出色</h3>
+                    <p>动画效果丰富、界面精致，让这款游戏更有现代感和沉浸体验。</p>
+                </article>
+            </div>
+
+            <div class="footer">
+                <p>准备好出发了吗？立即下载，开启你的空战旅程。</p>
+            </div>
+        </section>
+    </main>
 
     <script>
-        (function() {
-            const downloadUrl = "https://github.com/jin141220/airplane/releases/download/Airplane1.0/Airplane.zip";
-            const downloadFileName = "Airplane.zip";
-            const downloadButton = document.getElementById("downloadAirplaneButton");
-            function startDownload(url, filename) {
-                if (!url || url === "") {
-                    alert("Download URL is not configured");
-                    return;
-                }
-                const link = document.createElement("a");
-                link.href = url;
-                if (filename) {
-                    link.download = filename;
-                }
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }
-            if (downloadButton) {
-                downloadButton.addEventListener("click", function(e) {
-                    e.preventDefault();
-                    startDownload(downloadUrl, downloadFileName);
-                });
-            }
-        })();
+        // Add a subtle motion effect to the hero card based on pointer movement.
+        const visualCard = document.querySelector('.visual-card');
+        if (visualCard) {
+            window.addEventListener('pointermove', (event) => {
+                const x = (event.clientX / window.innerWidth - 0.5) * 8;
+                const y = (event.clientY / window.innerHeight - 0.5) * 8;
+                visualCard.style.transform = `perspective(1000px) rotateY(${x}deg) rotateX(${-y}deg)`;
+            });
+
+            window.addEventListener('pointerleave', () => {
+                visualCard.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg)';
+            });
+        }
     </script>
 </body>
 </html>
